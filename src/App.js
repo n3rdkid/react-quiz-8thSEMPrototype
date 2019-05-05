@@ -1,6 +1,9 @@
 import React from 'react';
 import './App.css';
-import Quiz from './components/QuizQuestion'
+import Quiz from './components/QuizQuestion';
+import {UnControlled as CodeMirror} from 'react-codemirror2';
+import '../node_modules/codemirror/lib/codemirror.css';
+import '../node_modules/codemirror/theme/material.css';
 class App extends React.Component {
   state={
     questionList: [{
@@ -58,11 +61,18 @@ class App extends React.Component {
       </div>
     }
     return (
+    <>
     <div>
      {quiz}
-    
-      </div>
-    );
+     <CodeMirror className="col-md-8" value='<h1>I ♥ react-codemirror2</h1>'
+  options={{    mode: 'xml',
+    theme: 'material',
+    lineNumbers: true
+  }}  onChange={(editor, data, value) => {
+  }}/>
+  </div>
+</> 
+   );
   }
 }
 
