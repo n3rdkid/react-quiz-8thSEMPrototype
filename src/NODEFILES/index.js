@@ -1,6 +1,7 @@
 const http = require('http');
 const url = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
+const config=require('./config')
 const server = http.createServer(function (req, res) {
             // Handling URL, Query here
             const parsedUrl = url.parse(req.url, true);
@@ -34,6 +35,7 @@ const server = http.createServer(function (req, res) {
                             statusCode=typeof(statusCode)=='number'?statusCode:200;
                             payload=typeof(payload)=='object'?payload:{};
                             let responsePayload=JSON.stringify(payload);
+                            res.setHeader('Content-Type','application/json')
                             res.writeHead(statusCode);
                             res.end(responsePayload);
                             console.log("Returning" + statusCode+ " and "+responsePayload);
@@ -54,4 +56,4 @@ const server = http.createServer(function (req, res) {
     }
 });
 
-server.listen(3000,()=> console.log("Listening on port 3000"));
+server.listen(config.port,()=> console.log(`We are on Listening on port : ${config.port} on ${config.envName} mode`));
