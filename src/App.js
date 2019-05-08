@@ -4,6 +4,7 @@ import Quiz from './components/QuizQuestion';
 import {UnControlled as CodeMirror} from 'react-codemirror2';
 import '../node_modules/codemirror/lib/codemirror.css';
 import '../node_modules/codemirror/theme/material.css';
+let currentValue=null;
 class App extends React.Component {
   state={
     questionList: [{
@@ -50,6 +51,15 @@ class App extends React.Component {
       this.setState({score:score,nextQuestion:nextQuestion})
     },1000)
   }
+  javaScriptHandler()
+  {
+    const iframe=document.querySelector("#myFrame");
+    let iframe_doc=iframe.contentDocument;
+    let temp=new Function(currentValue);
+    iframe_doc.open();
+		iframe_doc.write(temp());
+		iframe_doc.close();
+  }
   render() {
     let quiz;
     if(this.state.nextQuestion<this.state.questionList.length){
@@ -64,12 +74,23 @@ class App extends React.Component {
     <>
     <div>
      {quiz}
-     <CodeMirror className="col-md-8" value='<h1>I ♥ react-codemirror2</h1>'
-  options={{    mode: 'xml',
+     <div class="row"> 
+     <CodeMirror className="col-md-8" 
+  options={{ 
     theme: 'material',
-    lineNumbers: true
+    lineNumbers: true,
+    mode:  'jsx',
+    tabSize: 2,
+    autofocus: true,
+    foldGutter: false,
+    gutters: [],
+    styleSelectedText: true,
   }}  onChange={(editor, data, value) => {
+    currentValue=value;
   }}/>
+<iframe title="myFrame" id="myFrame" className="col-md-4"></iframe>
+  </div>
+  <button onClick={this.javaScriptHandler} class="btn btn-outline-success">Run</button>
   </div>
 </> 
    );
