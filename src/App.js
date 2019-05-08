@@ -4,7 +4,13 @@ import Quiz from './components/QuizQuestion';
 import {UnControlled as CodeMirror} from 'react-codemirror2';
 import '../node_modules/codemirror/lib/codemirror.css';
 import '../node_modules/codemirror/theme/material.css';
-let currentValue=null;
+let currentValue=`function rot13(str) { // LBH QVQ VG!
+  
+  return str;
+}
+
+// Change the inputs below to test
+rot13("SERR PBQR PNZC");`;
 class App extends React.Component {
   state={
     questionList: [{
@@ -55,10 +61,10 @@ class App extends React.Component {
   {
     const iframe=document.querySelector("#myFrame");
     let iframe_doc=iframe.contentDocument;
-    let temp=new Function(currentValue);
+    let temp=eval(currentValue);
     iframe_doc.open();
-		iframe_doc.write(temp());
-		iframe_doc.close();
+ 		iframe_doc.write(temp);
+    iframe_doc.close();
   }
   render() {
     let quiz;
@@ -75,7 +81,13 @@ class App extends React.Component {
     <div>
      {quiz}
      <div class="row"> 
-     <CodeMirror className="col-md-8" 
+     <CodeMirror className="col-md-8" value={`function rot13(str) { // LBH QVQ VG!
+  
+  return str;
+}
+
+// Change the inputs below to test
+rot13("SERR PBQR PNZC");`}
   options={{ 
     theme: 'material',
     lineNumbers: true,
