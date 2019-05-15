@@ -80,17 +80,18 @@ class App extends React.Component {
     const iframe = document.querySelector("#myFrame");
     let iframe_doc = iframe.contentDocument;
     let temp;
+    let result=[];
     for(let i of testCases)
     {
       temp = eval(currentValue.concat(i.test));
       if(temp === i.result)
-        console.log(`Test ${i.no} pass! Expected : ${i.result} Outcome : ${temp}`)
+      result+=`<p>Test ${i.no} pass! Expected : ${i.result} Outcome : ${temp}</p>`
       else
-      console.log(`Test ${i.no} fail! Expected : ${i.result} Outcome : ${temp}`)
+      result+=`<p>Test ${i.no} fail! Expected : ${i.result} Outcome : ${temp}</p>`
     }
     
     iframe_doc.open();
-    iframe_doc.write(temp);
+    iframe_doc.write(result);
     iframe_doc.close();
   }
   render() {
